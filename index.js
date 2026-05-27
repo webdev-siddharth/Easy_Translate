@@ -55,6 +55,7 @@ client.on("ready", () => {
 });
 
 client.on("messageCreate", async (message) => {
+  console.log(`📨 Message received: "${message.content}" from ${message.author.tag}`);
   if (message.author.bot) return;
 
   // ❌ Cooldown (3 sec)
@@ -63,7 +64,7 @@ client.on("messageCreate", async (message) => {
   setTimeout(() => cooldown.delete(message.author.id), 3000);
 
   if (message.content.length < 3) return;
-  if (!/[\u00C0-\u02AF\u0370-\u052F\u0900-\u0DFF\u0E00-\u0FFF\u1000-\u109F\u1100-\u1FFF\u2C00-\u2FFF\u3040-\u309F\u30A0-\u30FF\u3100-\u312F\u3130-\u318F\u31F0-\u31FF\u3200-\u33FF\u3400-\u4DBF\u4E00-\u9FFF\uA000-\uA4CF\uA500-\uA63F\uA640-\uA69F\uA700-\uA7FF\uA800-\uA83F\uA840-\uA87F\uA880-\uA9DF\uAA00-\uAA7F\uAB00-\uAB6F\uAC00-\uD7AF\uF900-\uFAFF\uFB00-\uFB4F\uFB50-\uFDFF\uFE70-\uFEFF\uFF00-\uFFEF]/.test(message.content)) return;
+
 
   try {
     const translated = await translateText(message.content);
