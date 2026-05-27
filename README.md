@@ -1,16 +1,15 @@
 # 🌐 Easy Translate - Discord Bot
 
-A powerful and simple Discord bot that translates messages into multiple languages instantly. Perfect for multilingual communities and global communication.
+A Discord bot that automatically detects non-English messages and translates them to English in real time. Perfect for multilingual communities.
 
 ---
 
 ## 🚀 Features
 
-* 🌍 Translate text into multiple languages
-* ⚡ Fast and accurate translations
-* 🤖 Easy-to-use Discord commands
-* 🔄 Real-time message translation
-* 🧠 Powered by Google Translate API
+* 🤖 Auto-detects non-English messages and translates them to English
+* ⚡ Google Translate API (primary) with LibreTranslate fallback
+* 🛡️ Built-in cooldown to prevent spam
+* 🌍 Supports virtually every written script
 
 ---
 
@@ -22,9 +21,9 @@ A powerful and simple Discord bot that translates messages into multiple languag
 
 ## 🛠️ Tech Stack
 
-* Node.js
-* Discord.js
-* Google Translate API
+* Node.js (18+)
+* Discord.js v14
+* Google Translate API (+ LibreTranslate fallback)
 
 ---
 
@@ -63,13 +62,9 @@ node index.js
 
 ## 💡 Usage
 
-Use commands in your Discord server:
+Once the bot is in your server, it automatically translates any non-English message and replies with the English translation. No commands needed.
 
-```
-!translate hello -> es
-```
-
-👉 Output: "hola"
+👉 Simply type a message in any language, and the bot will reply with the English translation.
 
 ---
 
@@ -77,11 +72,11 @@ Use commands in your Discord server:
 
 ```
 Easy_Translate/
-│── node_modules/
-│── src/
-│── .env
-│── package.json
-│── index.js
+├── node_modules/
+├── .env
+├── .gitignore
+├── package.json
+└── index.js
 ```
 
 ---
@@ -90,7 +85,7 @@ Easy_Translate/
 
 | Variable      | Description            |
 | ------------- | ---------------------- |
-| DISCORD_TOKEN | Your Discord bot token |
+| TOKEN         | Your Discord bot token |
 
 ---
 

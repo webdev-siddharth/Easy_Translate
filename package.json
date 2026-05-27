@@ -8,11 +8,10 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "type": "commonjs",
   "dependencies": {
     "@vitalets/google-translate-api": "^9.2.1",
-    "axios": "^1.15.1",
     "discord.js": "^14.26.0",
     "dotenv": "^17.4.0"
   }

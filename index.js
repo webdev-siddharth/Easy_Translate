@@ -1,6 +1,5 @@
 require("dotenv").config();
 const { Client, GatewayIntentBits } = require("discord.js");
-const axios = require("axios");
 const { translate } = require("@vitalets/google-translate-api");
 
 const client = new Client({
@@ -27,24 +26,22 @@ async function translateText(text) {
     console.log("⚠️ Google failed");
   }
 
-  // 2️⃣ Fallback LibreTranslate
   try {
-    const res = await axios.post(
-      "https://libretranslate.de/translate",
-      {
-        q: text,
-        source: "auto",
-        target: "en",
-        format: "text",
-      },
-      {
-        timeout: 5000,
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 5000);
+    const res = await fetch("https://libretranslate.de/translate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ q: text, source: "auto", target: "en", format: "text" }),
+      signal: controller.signal,
+    });
+    clearTimeout(timer);
 
-    if (res.data && res.data.translatedText) {
-      return res.data.translatedText;
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const data = await res.json();
+    if (data.translatedText) {
+      return data.translatedText;
     }
   } catch (err) {
     console.log("⚠️ Libre failed");
@@ -53,7 +50,7 @@ async function translateText(text) {
   return null;
 }
 
-client.on("clientReady", () => {
+client.on("ready", () => {
   console.log(`✅ Translate Easy Online: ${client.user.tag}`);
 });
 
@@ -65,9 +62,8 @@ client.on("messageCreate", async (message) => {
   cooldown.add(message.author.id);
   setTimeout(() => cooldown.delete(message.author.id), 3000);
 
-  // ❌ Ignore short / useless messages
   if (message.content.length < 3) return;
-  if (!/[a-zA-Z\u00C0-\u024F\u0900-\u097F]/.test(message.content)) return;
+  if (!/[\u00C0-\u02AF\u0370-\u052F\u0900-\u0DFF\u0E00-\u0FFF\u1000-\u109F\u1100-\u1FFF\u2C00-\u2FFF\u3040-\u309F\u30A0-\u30FF\u3100-\u312F\u3130-\u318F\u31F0-\u31FF\u3200-\u33FF\u3400-\u4DBF\u4E00-\u9FFF\uA000-\uA4CF\uA500-\uA63F\uA640-\uA69F\uA700-\uA7FF\uA800-\uA83F\uA840-\uA87F\uA880-\uA9DF\uAA00-\uAA7F\uAB00-\uAB6F\uAC00-\uD7AF\uF900-\uFAFF\uFB00-\uFB4F\uFB50-\uFDFF\uFE70-\uFEFF\uFF00-\uFFEF]/.test(message.content)) return;
 
   try {
     const translated = await translateText(message.content);
@@ -95,4 +91,7 @@ client.on("messageCreate", async (message) => {
   }
 });
 
-client.login(process.env.TOKEN);
+client.login(process.env.TOKEN).catch((err) => {
+  console.error("❌ Failed to login:", err.message);
+  process.exit(1);
+});
