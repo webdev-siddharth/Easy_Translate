@@ -13,9 +13,9 @@ A Discord bot that automatically detects non-English messages and translates the
 
 ---
 
-## 📸 Demo
+## 📸 Bot Website
 
-> Coming soon...
+> <a href="https://easy-translate-xjr3.onrender.com/"><b>CLICK ME</b></a>
 
 ---
 
