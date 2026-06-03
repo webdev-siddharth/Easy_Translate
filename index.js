@@ -101,14 +101,23 @@ const express = require("express");
 const app = express();
 
 app.get("/", (req, res) => {
-  res.send("Bot is running");
+  res.send(`
+    <html>
+      <head>
+        <title>Easy Translate</title>
+      </head>
+      <body>
+        <h1>Easy Translate</h1>
+        <p>Automatically translates non-English messages to English.</p>
+
+        <a href="https://discord.com/oauth2/authorize?client_id=1489577881960185866">
+          <button>Add to Discord</button>
+        </a>
+      </body>
+    </html>
+  `);
 });
 
-app.get("/invite", (req, res) => {
-  res.redirect(
-    "https://discord.com/oauth2/authorize?client_id=1489577881960185866"
-  );
-});
 
 const PORT = process.env.PORT || 3000;
 
