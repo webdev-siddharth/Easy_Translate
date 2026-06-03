@@ -111,7 +111,7 @@ app.get("/", (req, res) => {
   <html>
   <head>
     <title>Easy Translate</title>
-    <link rel="icon" href="/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">    
     <style>
       *{
         margin:0;
