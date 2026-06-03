@@ -104,6 +104,12 @@ app.get("/", (req, res) => {
   res.send("Bot is running");
 });
 
+app.get("/invite", (req, res) => {
+  res.redirect(
+    "https://discord.com/oauth2/authorize?client_id=1489577881960185866"
+  );
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
