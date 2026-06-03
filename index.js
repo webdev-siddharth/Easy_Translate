@@ -102,19 +102,110 @@ const app = express();
 
 app.get("/", (req, res) => {
   res.send(`
-    <html>
-      <head>
-        <title>Easy Translate</title>
-      </head>
-      <body>
-        <h1>Easy Translate</h1>
-        <p>Automatically translates non-English messages to English.</p>
+    <!DOCTYPE html>
+  <html>
+  <head>
+    <title>Easy Translate</title>
+    <style>
+      *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:Arial,sans-serif;
+      }
 
-        <a href="https://discord.com/oauth2/authorize?client_id=1489577881960185866">
-          <button>Add to Discord</button>
-        </a>
-      </body>
-    </html>
+      body{
+        background: linear-gradient(135deg,#0f172a,#1e293b);
+        min-height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        color:white;
+      }
+
+      .card{
+        width:90%;
+        max-width:700px;
+        text-align:center;
+        background:rgba(255,255,255,0.05);
+        backdrop-filter:blur(10px);
+        border:1px solid rgba(255,255,255,0.1);
+        border-radius:20px;
+        padding:50px;
+        box-shadow:0 10px 30px rgba(0,0,0,0.4);
+      }
+
+      .logo{
+        font-size:60px;
+        margin-bottom:15px;
+      }
+
+      h1{
+        font-size:48px;
+        margin-bottom:15px;
+      }
+
+      p{
+        font-size:18px;
+        color:#cbd5e1;
+        margin-bottom:35px;
+        line-height:1.6;
+      }
+
+      .btn{
+        display:inline-block;
+        background:#5865F2;
+        color:white;
+        text-decoration:none;
+        padding:16px 35px;
+        border-radius:12px;
+        font-size:18px;
+        font-weight:bold;
+        transition:.3s;
+      }
+
+      .btn:hover{
+        transform:translateY(-3px);
+      }
+
+      .features{
+        margin-top:40px;
+        display:grid;
+        gap:15px;
+      }
+
+      .feature{
+        background:rgba(255,255,255,0.05);
+        padding:15px;
+        border-radius:10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="card">
+      <div class="logo">🌐</div>
+
+      <h1>Easy Translate</h1>
+
+      <p>
+        Automatically translates non-English messages into English
+        so everyone in your Discord server can communicate easily.
+      </p>
+
+      <a class="btn"
+         href="YOUR_DISCORD_INVITE_LINK">
+         Add to Discord
+      </a>
+
+      <div class="features">
+        <div class="feature">⚡ Instant Translation</div>
+        <div class="feature">🌍 Supports Multiple Languages</div>
+        <div class="feature">🤖 Easy to Use</div>
+      </div>
+    </div>
+  </body>
+  </html>
   `);
 });
 
