@@ -98,7 +98,12 @@ client.login(process.env.TOKEN).catch((err) => {
 });
 
 const express = require("express");
+const path = require("path");
 const app = express();
+
+app.get("/favicon.ico", (req, res) => {
+  res.sendFile(path.join(__dirname, "favicon.ico"));
+});
 
 app.get("/", (req, res) => {
   res.send(`
@@ -106,7 +111,7 @@ app.get("/", (req, res) => {
   <html>
   <head>
     <title>Easy Translate</title>
-    <link src="favicon.ico" rel="icon" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico">
     <style>
       *{
         margin:0;
