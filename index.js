@@ -142,8 +142,10 @@ app.get("/", (req, res) => {
       }
 
       .logo{
-        font-size:60px;
-        margin-bottom:15px;
+        width:120px;
+        height:120px;
+        display:block;
+        margin:0 auto 15px;
       }
 
       h1{
