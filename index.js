@@ -190,7 +190,7 @@ app.get("/", (req, res) => {
 
   <body>
     <div class="card">
-      <div class="logo">🌐</div>
+      <div class="logo"><img src="/favicon.svg" alt="Logo"></div>
 
       <h1>Easy Translate</h1>
 
