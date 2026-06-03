@@ -106,6 +106,7 @@ app.get("/", (req, res) => {
   <html>
   <head>
     <title>Easy Translate</title>
+    <link src="favicon.ico" rel="icon" type="image/x-icon">
     <style>
       *{
         margin:0;
