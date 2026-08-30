@@ -1,117 +1,181 @@
-# 🌐 Easy Translate - Discord Bot
+<p align="center">
+  <img src="favicon.svg" width="112" alt="Easy Translate logo">
+</p>
 
-A Discord bot that automatically detects non-English messages and translates them to English in real time. Perfect for multilingual communities.
+<h1 align="center">Easy Translate</h1>
 
----
+<p align="center">
+  A lightweight Discord bot that helps multilingual communities understand each other—automatically translating messages into English.
+</p>
 
-## 🚀 Features
+<p align="center">
+  <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white" alt="Node.js 18+"></a>
+  <a href="https://discord.js.org/"><img src="https://img.shields.io/badge/discord.js-v14-5865F2?logo=discord&logoColor=white" alt="discord.js v14"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-f5c542" alt="MIT License"></a>
+  <a href="https://easy-translate-a1ph.onrender.com/"><img src="https://img.shields.io/badge/Live%20Preview-Render-46E3B7?logo=render&logoColor=white" alt="Live preview"></a>
+</p>
 
-* 🤖 Auto-detects non-English messages and translates them to English
-* ⚡ Google Translate API (primary) with LibreTranslate fallback
-* 🛡️ Built-in cooldown to prevent spam
-* 🌍 Supports virtually every written script
-
----
-
-## 📸 Bot Website
-
-> <a href="https://easy-translate-xjr3.onrender.com/"><b>CLICK ME</b></a>
-
----
-
-## 🛠️ Tech Stack
-
-* Node.js (18+)
-* Discord.js v14
-* Google Translate API (+ LibreTranslate fallback)
+<p align="center">
+  <a href="https://easy-translate-a1ph.onrender.com/"><strong>View live preview</strong></a>
+  ·
+  <a href="#quick-start"><strong>Get started</strong></a>
+  ·
+  <a href="#deploy-on-render"><strong>Deploy on Render</strong></a>
+</p>
 
 ---
 
-## 📦 Installation
+## What it does
 
-### 1️⃣ Clone the repository
+Send a message in your Discord server. Easy Translate tries Google Translate first and falls back to LibreTranslate if needed. When the English result differs from the original message, the bot replies with the translation.
+
+```text
+You:  Hola, ¿cómo estás?
+Bot:  🌐 Translated to English:
+      > Hello, how are you?
+```
+
+## Features
+
+| Feature | How it works |
+| --- | --- |
+| 🌍 Automatic translation | Translates eligible Discord messages to English. |
+| ⚡ Two-service fallback | Uses Google Translate first, then LibreTranslate if Google fails. |
+| 🧠 Skip unchanged text | Avoids replying when the translated result matches the original text. |
+| 🛡️ Anti-spam cooldown | Limits each user to one translation attempt every three seconds. |
+| 🩺 Health endpoint | Exposes `GET /health` for deployment monitoring. |
+| ✨ Simple by design | No commands or setup are required after the bot is invited and online. |
+
+<details>
+<summary><strong>Translation flow</strong></summary>
+
+```text
+Discord message
+      ↓
+Google Translate
+      ↓ (only on failure)
+LibreTranslate
+      ↓
+English reply in the same Discord conversation
+```
+
+</details>
+
+## Quick start
+
+### 1. Clone the project
 
 ```bash
 git clone https://github.com/webdev-siddharth/Easy_Translate.git
 cd Easy_Translate
 ```
 
-### 2️⃣ Install dependencies
+### 2. Install dependencies
 
 ```bash
 npm install
 ```
 
-### 3️⃣ Setup environment variables
+### 3. Create your environment file
 
-Create a `.env` file in the root directory and add:
+Create a `.env` file in the project root:
 
 ```env
-DISCORD_TOKEN=your_discord_bot_token
+TOKEN=your_discord_bot_token
 ```
 
----
+> Never commit your token. `.env` is already excluded by `.gitignore`.
 
-## ▶️ Run the bot
+### 4. Configure Discord
+
+In the [Discord Developer Portal](https://discord.com/developers/applications), enable **Message Content Intent** for your bot. Without it, Discord does not provide message text to the application.
+
+### 5. Start the bot
 
 ```bash
-node index.js
+npm start
 ```
 
----
+When the bot connects successfully, the console prints its Discord username and the web server port.
 
-## 💡 Usage
+## Deploy on Render
 
-Once the bot is in your server, it automatically translates any non-English message and replies with the English translation. No commands needed.
+1. Push this repository to GitHub.
+2. In Render, select **New → Web Service** and connect the repository.
+3. Configure the service:
 
-👉 Simply type a message in any language, and the bot will reply with the English translation.
+| Setting | Value |
+| --- | --- |
+| Runtime | Node |
+| Build Command | `npm ci` |
+| Start Command | `npm start` |
+| Health Check Path | `/health` |
+| Environment Variable | `TOKEN` = your Discord bot token |
 
----
+4. Create the service and open the deployed URL.
 
-## 📁 Project Structure
+The current live preview is [easy-translate-a1ph.onrender.com](https://easy-translate-a1ph.onrender.com/).
 
+> Render's free web services can sleep after inactivity, which disconnects a Discord bot. It is useful for testing; choose always-on hosting for dependable 24/7 translation.
+
+## HTTP endpoints
+
+| Route | Purpose |
+| --- | --- |
+| `GET /` | Easy Translate landing page |
+| `GET /favicon.svg` | Bot icon used by the landing page |
+| `GET /health` | JSON health status and current UTC timestamp |
+
+Example health response:
+
+```json
+{
+  "success": true,
+  "message": "Server is healthy",
+  "timestamp": "2026-08-31T12:00:00.000Z"
+}
 ```
+
+## Project structure
+
+```text
 Easy_Translate/
-├── node_modules/
-├── .env
-├── .gitignore
-├── package.json
-└── index.js
+├── index.js          # Discord client, translation logic, and Express server
+├── favicon.svg       # Landing-page icon
+├── package.json       # Scripts and dependencies
+├── package-lock.json  # Locked dependency versions
+├── .gitignore         # Local files and secrets excluded from Git
+└── README.md
 ```
 
----
+<details>
+<summary><strong>Troubleshooting</strong></summary>
 
-## 🔐 Environment Variables
+| Symptom | Check |
+| --- | --- |
+| Bot does not receive messages | Enable Message Content Intent and confirm the bot can view the channel. |
+| Login fails | Confirm `TOKEN` is set to the bot token, not the application ID or client secret. |
+| No translation reply | Check the process logs for Google/LibreTranslate errors and ensure the message is at least three characters long. |
+| Render health check returns 404 | Push the current `index.js` containing the `/health` route and redeploy. |
 
-| Variable      | Description            |
-| ------------- | ---------------------- |
-| TOKEN         | Your Discord bot token |
+</details>
 
----
+## Tech stack
 
-## 🤝 Contributing
+- Node.js 18+
+- [discord.js](https://discord.js.org/) v14
+- [@vitalets/google-translate-api](https://www.npmjs.com/package/@vitalets/google-translate-api)
+- [Express](https://expressjs.com/)
+- LibreTranslate fallback API
 
-Contributions are welcome! Feel free to fork this repo and submit a pull request.
+## Contributing
 
----
+Ideas, bug reports, and pull requests are welcome. Please keep changes focused and avoid committing secrets, `node_modules`, or local tool files.
 
-## 📄 License
+## License
 
-This project is licensed under the MIT License.
+Released under the [MIT License](LICENSE).
 
----
+## Author
 
-## 👨‍💻 Author
-
-**Siddharth Vishwakarma**
-
-* GitHub: https://github.com/webdev-siddharth
-* LinkedIn: https://linkedin.com/in/mrsiddharthvishwakarma
-
----
-
-## ⭐ Support
-
-If you like this project, give it a ⭐ on GitHub!
-
----
+Built by [Siddharth Vishwakarma](https://github.com/webdev-siddharth) · [LinkedIn](https://linkedin.com/in/mrsiddharthvishwakarma)

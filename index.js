@@ -210,7 +210,7 @@ app.get("/", (req, res) => {
       </p>
 
       <a class="btn"
-         href="YOUR_DISCORD_INVITE_LINK">
+         href="https://discord.com/oauth2/authorize?client_id=1489577881960185866&permissions=274877975616&integration_type=0&scope=bot+applications.commands">
          Add to Discord
       </a>
 
