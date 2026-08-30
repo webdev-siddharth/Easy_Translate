@@ -1,6 +1,17 @@
 node_modules/
 .env
+.env.*
+!.env.example
 dist/
 build/
 *.log
 .DS_Store
+
+# Local AI/editor workspace data
+.kilo/
+.hermes/
+
+# Local reference images and planning notes
+Images/
+Codex Image*.png
+IDEA.md

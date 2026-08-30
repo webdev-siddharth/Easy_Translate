@@ -105,6 +105,14 @@ app.get("/favicon.svg", (req, res) => {
   res.sendFile(path.join(__dirname, "favicon.svg"));
 });
 
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Server is healthy",
+    timestamp: new Date().toISOString(),
+  });
+});
+
 app.get("/", (req, res) => {
   res.send(`
     <!DOCTYPE html>
